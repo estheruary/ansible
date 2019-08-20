@@ -660,4 +660,7 @@ class FilterModule(object):
             'dict2items': dict_to_list_of_dict_key_value_elements,
             'items2dict': list_of_dict_key_value_elements_to_dict,
             'subelements': subelements,
+
+            # string formatting
+            'split': str.split
         }
