@@ -1508,6 +1508,18 @@ INTERPRETER_PYTHON:
     value of ``auto_legacy`` provides all the same behavior, but for backwards-compatibility with older Ansible releases
     that always defaulted to ``/usr/bin/python``, will use that interpreter if present (and issue a warning that the
     default behavior will change to that of ``auto`` in a future Ansible release.
+IGNORE_MISSING_SELINUX_BINDINGS:
+  name: Ignore missing SELinux bindings when performing file operations.
+  default: False
+  description:
+    - Allows modules that perform file operations to be run on a system where the SELinux python bindings are missing
+      or not yet present.
+  env: [{name: ANSIBLE_IGNORE_MISSING_SELINUX_BINDINGS}]
+  ini:
+    - {key: ignore_missing_selinux_bindings, section: defaults}
+  vars:
+    - {name: ansible_ignore_missing_selinux_bindings}
+  version_added: "2.9"
 INTERPRETER_PYTHON_DISTRO_MAP:
   name: Mapping of known included platform pythons for various Linux distros
   default:
