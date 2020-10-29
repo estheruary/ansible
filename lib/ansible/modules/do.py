@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright:  Ansible Project
+# Copyright:  Estelle Poulin <dev@inspiredby.es>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -10,20 +11,13 @@ __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-author: Ansible Core Team (@ansible)
-module: include_tasks
-short_description: Dynamically include a task list
+author: Estelle Poulin (dev@inspiredby.es)
+module: do
+short_description: Dynamically include a task block
 description:
-  - Includes a file with a list of tasks to be executed in the current playbook.
-version_added: '2.4'
+  - Includes a block with a list of tasks to be executed in the current playbook.
+version_added: '2.10'
 options:
-  file:
-    description:
-      - The name of the imported file is specified directly without any other option.
-      - Unlike M(ansible.builtin.import_tasks), most keywords, including loop, with_items, and conditionals, apply to this statement.
-      - The do until loop is not supported on M(ansible.builtin.include_tasks).
-    type: str
-    version_added: '2.7'
   apply:
     description:
       - Accepts a hash of task keywords (e.g. C(tags), C(become)) that will be applied to the tasks within the include.
@@ -32,14 +26,12 @@ options:
   free-form:
     description:
       - |
-        Supplying a file name via free-form C(- include_tasks: file.yml) of a file to be included is the equivalent
-        of specifying an argument of I(file).
+        Accepts a list of tasks specificed in the same manner as C(block).
 notes:
   - This is a core feature of the Ansible, rather than a module, and cannot be overridden like a module.
 seealso:
-- module: ansible.builtin.import_playbook
-- module: ansible.builtin.import_role
-- module: ansible.builtin.import_tasks
+- module: ansible.builtin.include
+- module: ansible.builtin.include_tasks
 - module: ansible.builtin.include_role
 - ref: playbooks_reuse_includes
   description: More information related to including and importing playbooks, roles and tasks.
@@ -51,8 +43,10 @@ EXAMPLES = r'''
     - debug:
         msg: task1
 
-    - name: Include task list in play
-      include_tasks: stuff.yaml
+    - name: Run a task list within a play.
+      do:
+        - debug:
+            msg: stuff
 
     - debug:
         msg: task10
@@ -62,27 +56,27 @@ EXAMPLES = r'''
     - debug:
         msg: task1
 
-    - name: Include task list in play only if the condition is true
-      include_tasks: "{{ hostvar }}.yaml"
+    - name: Run the task list only if the condition is true.
+      do:
+        - debug:
+            msg: stuff
       when: hostvar is defined
 
 - name: Apply tags to tasks within included file
-  include_tasks:
-    file: install.yml
-    apply:
-      tags:
-        - install
-  tags:
-    - always
-
-- name: Apply tags to tasks within included file when using free-form
-  include_tasks: install.yml
+  do:
+    - debug:
+        msg: stuff
   args:
     apply:
-      tags:
-        - install
-  tags:
-    - always
+      tags: [install]
+  tags: [always]
+
+- name: Loop over a block of tasks.
+  do:
+    - debug:
+       var: item
+  loop: [1, 2, 3]
+
 '''
 
 RETURN = r'''

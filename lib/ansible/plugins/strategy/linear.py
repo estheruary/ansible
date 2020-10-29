@@ -455,13 +455,13 @@ class StrategyModule(StrategyBase):
 
                     # finally go through all of the hosts and append the
                     # accumulated blocks to their list of tasks
-                    display.debug("extending task lists for all hosts with included blocks")
+                    display.debug("extending task lists for all hosts with do blocks")
 
                     for host in hosts_left:
                         iterator.add_tasks(host, all_blocks[host])
 
                     display.debug("done extending task lists")
-                    display.debug("done processing included files")
+                    display.debug("done processing do blocks")
 
                 ###
 

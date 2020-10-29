@@ -1,4 +1,5 @@
 # (c) 2012-2014, Michael DeHaan <michael.dehaan@gmail.com>
+# (c) 2020, Estelle Poulin <dev@inspiredby.es>
 #
 # This file is part of Ansible
 #
@@ -109,7 +110,7 @@ class DoBlock:
                     do_block = original_task
 
                     do_blk = DoBlock(do_block, do_args, special_vars, original_task)
-                    
+
                     idx = 0
                     orig_do_blk = do_blk
                     while 1:
