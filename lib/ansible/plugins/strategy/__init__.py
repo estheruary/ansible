@@ -1001,7 +1001,7 @@ class StrategyBase:
         '''
 
         try:
-            data = do_block._args['do']
+            data = do_block._args['_raw_params']
             if data is None:
                 return []
             elif not isinstance(data, list):
@@ -1026,7 +1026,7 @@ class StrategyBase:
             block_list = load_list_of_blocks(
                 data,
                 play=iterator._play,
-                parent_block=None,
+                parent_block=ti_copy,
                 role=do_block._task._role,
                 use_handlers=is_handler,
                 loader=self._loader,

@@ -579,7 +579,7 @@ class TaskExecutor:
         # main thread can expand the task list for the given host
         if self._task.action == 'do':
             do_args = self._task.args.copy()
-            do_block = do_args.pop('_do', None)
+            do_block = do_args.get('_raw_params', None)
             if not do_block:
                 return dict(failed=True, msg="Do block was specified without a body.")
 

@@ -208,7 +208,7 @@ class ModuleArgsParser:
         if isinstance(thing, dict):
             # form is like: { xyz: { x: 2, y: 3 } }
             args = thing
-        elif isinstance(thing, string_types): 
+        elif isinstance(thing, string_types):
             # form is like: copy: src=a dest=b
             check_raw = action in FREEFORM_ACTIONS
             args = parse_kv(thing, check_raw=check_raw)
@@ -216,9 +216,7 @@ class ModuleArgsParser:
             # this can happen with modules which take no params, like ping:
             args = None
         elif isinstance(thing, AnsibleSequence):
-            args = {}
-            args[u'_do'] = thing
-            args['do'] = thing
+            args = { u'_raw_params': thing }
         else:
             raise AnsibleParserError("unexpected parameter type in action: %s" % type(thing), obj=self._task_ds)
         return args

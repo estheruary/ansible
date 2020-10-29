@@ -7,6 +7,10 @@
 
     - name: Test my do block.
       do:
-        - debug: msg="Inside do block"
+        - debug: var=item
+
+        - debug: msg=two
+      loop: [hello, world]
+
 
     - debug: msg="Finished do block"

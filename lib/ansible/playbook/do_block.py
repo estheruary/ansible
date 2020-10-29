@@ -46,8 +46,7 @@ class DoBlock:
         raise ValueError()
 
     def __eq__(self, other):
-        return (other._filename == self._filename and
-                other._args == self._args and
+        return (other._args == self._args and
                 other._vars == self._vars and
                 other._task._uuid == self._task._uuid and
                 other._task._parent._uuid == self._task._parent._uuid)
