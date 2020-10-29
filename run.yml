@@ -1,0 +1,12 @@
+---
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - debug: msg="Starting the do thing"
+
+    - name: Test my do block.
+      do:
+        - debug: msg="Inside do block"
+
+    - debug: msg="Finished do block"

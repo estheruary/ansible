@@ -159,6 +159,7 @@ class PlayIterator:
         # Gathering facts with run_once would copy the facts from one host to
         # the others.
         setup_block.run_once = False
+        # ES_TODO: This is a good place to add your ansible_rc feature.
         setup_task = Task(block=setup_block)
         setup_task.action = 'gather_facts'
         setup_task.name = 'Gathering Facts'
