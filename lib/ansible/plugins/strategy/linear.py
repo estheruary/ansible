@@ -410,7 +410,6 @@ class StrategyModule(StrategyBase):
                 ###
                 if len(do_blocks) > 0:
                     display.debug("we have included do blocks to process")
-                    print(do_blocks)
 
                     display.debug("generating all_blocks data")
                     all_blocks = dict((host, []) for host in hosts_left)
@@ -423,7 +422,7 @@ class StrategyModule(StrategyBase):
                             # TODO
                             new_blocks = self._load_do_block(do_block, iterator=iterator)
 
-                            display.debug("iterating over new_blocks loaded from include file")
+                            display.debug("iterating over new_blocks loaded from do blocks")
                             for new_block in new_blocks:
                                 task_vars = self._variable_manager.get_vars(
                                     play=iterator._play,

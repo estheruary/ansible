@@ -583,7 +583,6 @@ class TaskExecutor:
             if not do_block:
                 return dict(failed=True, msg="Do block was specified without a body.")
 
-            print(do_args)
             return dict(do=do_block, do_args=do_args)
 
         # if this task is a IncludeRole, we just return now with a success code so the main thread can expand the task list for the given host

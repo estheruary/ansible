@@ -917,7 +917,7 @@ class StrategyBase:
 
     def _copy_do(self, do_block):
         '''
-        A proven safe and performant way to create a copy of an included file
+        A proven safe and performant way to create a copy of do block.
         '''
         ti_copy = do_block._task.copy(exclude_parent=True)
         ti_copy._parent = do_block._task._parent
@@ -997,7 +997,7 @@ class StrategyBase:
 ###
     def _load_do_block(self, do_block, iterator, is_handler=False):
         '''
-        Loads an included YAML file of tasks, applying the optional set of variables.
+        Loads a list of tasks from the args of a do block, applying the optional set of variables.
         '''
 
         try:
@@ -1005,7 +1005,7 @@ class StrategyBase:
             if data is None:
                 return []
             elif not isinstance(data, list):
-                raise AnsibleError("included task files must contain a list of tasks")
+                raise AnsibleError("do blocks must contain a list of tasks")
 
             ti_copy = self._copy_do(do_block)
             # pop tags out of the do args, if they were specified there, and assign
@@ -1016,7 +1016,7 @@ class StrategyBase:
                 tags = tags.split(',')
             if len(tags) > 0:
                 if len(do_block._task.tags) > 0:
-                    raise AnsibleParserError("Include tasks should not specify tags in more than one way (both via args and directly on the task). "
+                    raise AnsibleParserError("Do blocks should not specify tags in more than one way (both via args and directly on the task). "
                                              "Mixing tag specify styles is prohibited for whole import hierarchy, not only for single import statement",
                                              obj=do_block._task._ds)
                 display.deprecated("You should not specify tags in the do parameters. All tags should be specified using the task-level option",
@@ -1051,9 +1051,7 @@ class StrategyBase:
                 self._tqm.send_callback('v2_runner_on_failed', tr)
             return []
 
-        # finally, send the callback and return the list of blocks loaded
-        self._tqm.send_callback('v2_playbook_on_include', do_block)
-        display.debug("done processing included file")
+        display.debug("done processing do blocks")
         return block_list
 
 ###
