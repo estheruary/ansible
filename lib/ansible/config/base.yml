@@ -1391,6 +1391,14 @@ FACTS_MODULES:
   type: list
   vars:
     - name: ansible_facts_modules
+FLUSH_HANDLERS_AFTER_ROLE:
+  name: Flush handlers after roles
+  default: False
+  description:
+    - Flush handlers after each role rather than only at the end of the play.
+  env: [{name: ANSIBLE_FLUSH_HANDLERS_AFTER_ROLE}]
+  ini: [{key: flush_handlers_after_role, section: default}]
+  type: boolean
 GALAXY_IGNORE_CERTS:
   name: Galaxy validate certs
   default: False

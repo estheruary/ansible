@@ -31,6 +31,7 @@ DOCUMENTATION = '''
     author: Ansible Core Team
 '''
 
+from ansible import constants as C
 from ansible.errors import AnsibleError, AnsibleAssertionError
 from ansible.executor.play_iterator import PlayIterator
 from ansible.module_utils.six import iteritems
@@ -357,6 +358,16 @@ class StrategyModule(StrategyBase):
                                     variable_manager=self._variable_manager,
                                     loader=self._loader,
                                 )
+
+                                if C.FLUSH_HANDLERS_AFTER_ROLE:
+                                    flush_block = Block.load(
+                                        data={'meta': 'flush_handlers'},
+                                        play=iterator._play,
+                                        variable_manager=self._variable_manager,
+                                        loader=self._loader
+                                    )
+                                    new_blocks.append(flush_block)
+
                             else:
                                 new_blocks = self._load_included_file(included_file, iterator=iterator)
 
