@@ -244,7 +244,8 @@ class Play(Base, Taggable, CollectionSearch):
                 if r.from_include:
                     continue
                 block_list.extend(r.compile(play=self))
-                block_list.append(flush_block)
+                if C.FLUSH_HANDLERS_AFTER_ROLE:
+                    block_list.append(flush_block)
 
         return block_list
 

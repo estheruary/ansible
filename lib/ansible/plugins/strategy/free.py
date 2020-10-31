@@ -35,13 +35,13 @@ import time
 
 from ansible import constants as C
 from ansible.errors import AnsibleError
+from ansible.playbook.block import Block
 from ansible.playbook.included_file import IncludedFile
 from ansible.plugins.loader import action_loader
 from ansible.plugins.strategy import StrategyBase
 from ansible.template import Templar
 from ansible.module_utils._text import to_text
 from ansible.utils.display import Display
-
 display = Display()
 
 
@@ -245,6 +245,16 @@ class StrategyModule(StrategyBase):
                                 variable_manager=self._variable_manager,
                                 loader=self._loader,
                             )
+
+                            if C.FLUSH_HANDLERS_AFTER_ROLE:
+                                    flush_block = Block.load(
+                                        data={'meta': 'flush_handlers'},
+                                        play=iterator._play,
+                                        variable_manager=self._variable_manager,
+                                        loader=self._loader
+                                    )
+                                    new_blocks.append(flush_block)
+
                         else:
                             new_blocks = self._load_included_file(included_file, iterator=iterator)
                     except AnsibleError as e:
