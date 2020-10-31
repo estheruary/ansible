@@ -1462,6 +1462,14 @@ IGNORE_MISSING_SELINUX_BINDINGS:
   vars:
     - {name: ansible_ignore_missing_selinux_bindings}
   version_added: "2.9"
+IGNORE_ROLE_DEPENDENCIES:
+  name: Ignore role dependencies
+  default: False
+  description:
+    - Skip dependencies for roles.
+  env: [{name: ANSIBLE_IGNORE_ROLE_DEPENDENCIES}]
+  ini: [{key: ignore_role_dependencies, section: defaults}]
+  type: boolean
 INTERPRETER_PYTHON_DISTRO_MAP:
   name: Mapping of known included platform pythons for various Linux distros
   default:
